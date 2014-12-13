@@ -1,7 +1,4 @@
-﻿// Learn more about F# at http://fsharp.net
-// See the 'F# Tutorial' project for more help.
-
-module ant
+﻿module ant
 
 type Pos = int*int
 type Blacks = Set<Pos>
@@ -39,13 +36,10 @@ let step (state : State) : State =
         let dir = turnLeft dir  
         (moveInDirection pos dir, dir, blacks.Add(pos))
 
-let rec play (state: State) (turns: int) : State = 
-   if turns = 0 then state
-   else play (step state) (turns - 1)
-
 [<EntryPoint>]
 let main argv = 
-//    printfn "%A" (play ((0,0),Right, Set.empty) 15000)
+    let repeat n f = List.fold (>>) id (List.replicate n f)
+    let play state turns = repeat turns step state
     printfn "%A" (play ((0,0),Right, Set.empty) 15001)
     System.Console.ReadLine() |> ignore
     0 
