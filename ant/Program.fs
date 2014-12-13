@@ -5,20 +5,18 @@ type Blacks = Set<Pos>
 type Dir = byte 
 type State = Pos * Dir * Blacks 
 
-let moveInDirection pos dir = 
-    let x,y = pos
-    match dir with 
-        | 0uy -> (x+1, y)
-        | 64uy -> (x,y+1) 
-        | 128uy -> (x-1, y) 
-        | _ -> (x,y-1)
-
 let step (state : State) =
     let pos, dir, blacks = state
+    let x,y = pos
+    let pos = match dir with 
+                | 0uy -> (x+1, y)
+                | 64uy -> (x,y+1) 
+                | 128uy -> (x-1, y) 
+                | _ -> (x,y-1)
     if blacks.Contains(pos) then 
-        (moveInDirection pos (dir + 64uy), dir + 64uy, blacks.Remove(pos))
+        (pos, dir + 64uy, blacks.Remove(pos))
     else  
-        (moveInDirection pos (dir - 64uy), dir - 64uy, blacks.Add(pos))
+        (pos, dir - 64uy, blacks.Add(pos))
 
 [<EntryPoint>]
 let main argv = 
