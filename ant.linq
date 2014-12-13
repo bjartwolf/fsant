@@ -2,9 +2,14 @@
   <Namespace>System.Drawing</Namespace>
 </Query>
 
-let s ((x,y), d, (b: Set<int*int>)) = let p = match d with | 0uy -> (x + 1, y) | 64uy -> (x, y + 1) | 128uy -> (x - 1, y) | _ -> (x, y - 1)
+let s ((x,y), d, (b: Set<int*int>)) = let p = match d with 
+										| 0uy -> (x + 1, y) 
+										| 64uy -> (x, y + 1) 
+										| 128uy -> (x - 1, y) 
+										| _ -> (x, y - 1)
                                       if b.Contains(p) then (p, d + 64uy, b.Remove(p)) else (p, d - 64uy, b.Add(p))
-let r f = List.fold (>>) id (List.replicate 15001 f)
+
+let r f = List.fold (>>) id (List.replicate 15000 f)
 
 let _,_, points = (r s ((100,100), 0uy, Set.empty))
 let bitmap = new Bitmap(400,400)
