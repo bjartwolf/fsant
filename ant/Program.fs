@@ -5,7 +5,7 @@ type Blacks = Set<Pos>
 type Dir = Right | Up | Left | Down
 type State = Pos * Dir * Blacks 
 
-let moveInDirection (pos: Pos) (dir: Dir) = 
+let moveInDirection pos dir = 
     let x,y = pos
     match dir with 
         | Right -> (x+1, y)
@@ -13,21 +13,21 @@ let moveInDirection (pos: Pos) (dir: Dir) =
         | Left -> (x-1, y) 
         | Down -> (x,y-1)
 
-let turnLeft (dir:Dir) =
+let turnLeft dir =
     match dir with
         | Right -> Up
         | Up -> Left 
         | Left -> Down
         | Down -> Right 
 
-let turnRight(dir:Dir) =
+let turnRight dir =
     match dir with
         | Right -> Down 
         | Up -> Right 
         | Left -> Up 
         | Down -> Left 
 
-let step (state : State) : State =
+let step (state : State) =
     let pos, dir, blacks = state
     if blacks.Contains(pos) then 
         let dir = turnRight dir  
