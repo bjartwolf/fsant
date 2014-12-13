@@ -13,18 +13,12 @@ let moveInDirection pos dir =
         | 128uy -> (x-1, y) 
         | _ -> (x,y-1)
 
-let turnLeft dir = dir + 64uy
-
-let turnRight dir = dir - 64uy
-
 let step (state : State) =
     let pos, dir, blacks = state
     if blacks.Contains(pos) then 
-        let dir = turnRight dir  
-        (moveInDirection pos dir, dir, blacks.Remove(pos))
+        (moveInDirection pos (dir + 64uy), dir + 64uy, blacks.Remove(pos))
     else  
-        let dir = turnLeft dir  
-        (moveInDirection pos dir, dir, blacks.Add(pos))
+        (moveInDirection pos (dir - 64uy), dir - 64uy, blacks.Add(pos))
 
 [<EntryPoint>]
 let main argv = 
