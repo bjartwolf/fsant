@@ -2,9 +2,6 @@
 
 [<EntryPoint>]
 let main argv = 
-    let s ((x,y), d, (b: Set<int*int>)) = let p = match d with |0uy->(x+1,y)|64uy->(x,y+1)|128uy->(x-1,y)|_->(x,y-1)
-                                          if b.Contains(p) then (p,d+64uy,b.Remove(p)) else (p,d-64uy,b.Add(p))
-    let r f = List.fold (>>) id (List.replicate 15001 f)
-    (r s ((0,0), 0uy, Set.empty)) |> printfn "%A" 
+    List.fold(fun((x,y),d,b)_->let m x=match x%4 with|0->1|2-> -1|_->0 in let p=x+m d,y+m(d-1) in p,d + (if Set.contains p b then 1 else 3),(b-set[p])+(set[p]-b))((100,100),0,Set.empty)[0..15000] |> printfn "%A" 
     System.Console.ReadLine() |> ignore
     0 
