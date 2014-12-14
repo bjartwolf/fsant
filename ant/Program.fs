@@ -2,6 +2,6 @@
 
 [<EntryPoint>]
 let main argv = 
-    List.fold(fun((x,y),d,b)_->let m x=match x%4 with|0->1|2-> -1|_->0 in let p=x+m d,y+m(d-1) in p,d + (if Set.contains p b then 1 else 3),(b-set[p])+(set[p]-b))((100,100),0,Set.empty)[0..15000] |> printfn "%A" 
+    List.fold(fun((x,y),d,b)_->let m=List.nth[0;1;0;-1;0]in let p=x+m(d+1),y+m d in p,(d+if b-set[p]=b then 3 else 1)%4,(b-set[p])+(set[p]-b))((100,100),0,set[])[0..15000] |> printfn "%A" 
     System.Console.ReadLine() |> ignore
     0 
